@@ -6,11 +6,11 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 
-
+cd ..
 cd dist
-
-git init
+# git init
 git checkout -b main
 git add -A -f
 git commit -m 'deploy'
 git push -f git@github.com:lkrcharon/yxhy-front-end.git main:gh-pages
+cd ..\front-end\
