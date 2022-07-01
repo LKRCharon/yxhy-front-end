@@ -1,9 +1,20 @@
 <script setup>
 import { ref } from 'vue'
-
+import axios from 'axios'
 defineProps({
   msg: String
-})
+})  
+
+let fuckzwz=()=> {
+  console.log("@@")
+  axios.get('https://console-mock.apipost.cn/app/mock/project/e106aa78-1b17-4ba5-b331-008692a43da2/data')
+  .then(res=>{
+    console.log(res.data)    
+  })
+  .catch(err=> {
+    console.log(error)
+  })
+}
 
 const count = ref(0)
 </script>
@@ -26,7 +37,7 @@ const count = ref(0)
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <button type="button" @click="count++">count is: {{ count }}</button>
+  <button type="button" @click="fuckzwz">count is: {{ count }}</button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
