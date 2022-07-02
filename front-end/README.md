@@ -14,3 +14,11 @@ git add -A -f
 git commit -m 'deploy'
 git push -f git@github.com:lkrcharon/yxhy-front-end.git main:gh-pages
 cd ..\front-end\
+
+
+git checkout gh-pages
+git checkout develop -- utils
+git add dist -f
+
+git commit -m "deploy"
+
