@@ -8,7 +8,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 
 cd dist
-git checkout -b 
+git init
 git add -A -f
 git commit -m 'deploy'
 git push -f git@github.com:lkrcharon/yxhy-front-end.git main:gh-pages
