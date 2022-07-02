@@ -11,6 +11,7 @@ cd dist
 git init
 git add -A -f
 git commit -m 'deploy'
+git pull --rebase git@github.com:lkrcharon/yxhy-front-end.git main:gh-pages
 git push -f git@github.com:lkrcharon/yxhy-front-end.git main:gh-pages
 cd ..
 

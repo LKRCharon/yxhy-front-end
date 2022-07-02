@@ -159,7 +159,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex w-full justify-center items-center sm:justify-start sm:w-90 pointer-events-auto">
+                    <div class="flex justify-center items-center sm:justify-start sm:w-90 pointer-events-auto">
                         <div
                             class="flex sm:items-center space-x-4 max-w-3xl bg-gray-200 bg-opacity-50 backdrop-blur-xl rounded-2xl p-2 justify-evenly">
                             <div class="py-2 pl-4 pr-4">
