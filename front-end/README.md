@@ -17,7 +17,7 @@ cd ..\front-end\
 
 
 git checkout gh-pages
-git checkout develop -- utils
+git checkout develop -- dist
 git add dist -f
 
 git commit -m "deploy"
