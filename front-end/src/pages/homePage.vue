@@ -3,7 +3,7 @@
         <div class="app min-h-full flex flex-col ">
             <headerNav/>    
             <main
-                class="flex flex-1 flex-col sm:items-center sm:justify-center overflow-hidden pt-24 sm:pt-40 items-center justify-center pb-10">
+                class="flex flex-1 flex-col sm:items-center sm:justify-center overflow-hidden pt-24 items-center justify-center pb-10">
                 <div class="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-6 p-5 pt-0 pb-10">
                     <div class="sm:max-w-md lg:max-w-lg flex flex-col items-center sm:items-start p-0 m-0 space-y-5">
                         <h1 class="text-center font-bold sm:text-left text-xl sm:text-3xl lg:text-4.9xl"> 与图像中所有多余的
@@ -28,7 +28,7 @@
                         <div
                             class="w-full flex items-center justify-center px-6 py-8 sm:py-16 text- font-semibold border-4 border-dashed rounded-3xl border-black hover:bg-primary text-center bg-gray-100">
                             <input id="upload_img" name="upload_img" type="file" class="sr-only"
-                                accept="image/png, image/jpeg, image/jpg6">
+                                accept="image/png, image/jpeg, image/jpg" @change="uploadImg($event)">
                             <p class="hidden sm:block">单击或拖拽文件到此处</p>
                             <p class="sm:hidden">点击这里加载你的图片</p>
                         </div>
@@ -61,21 +61,68 @@
 </template>
 
 <script>
+// import utils from '../utils/imgTool'
+import axios from 'axios';
 import HeaderNav from '../components/headerNav.vue';
 export default {
     components: { HeaderNav },
     data (){
         return{
-
+            // 内网穿透的域名
+            POST_URL:'https://55r11310h8.oicp.vip'
         }
     },
     methods:{
         exampleClicked(event){
             // console.log(event.target.naturalWidth)
         },
-        getImgSize(){
+        uploadImg(e){
+            let imgfile=e.target.files[0]
+            let imgurl = null;
+            // 初始化fileReader读取imgfile的base64码。
+            var reader = new FileReader()
+            reader.readAsDataURL(imgfile)
+            // onload控制读取完成后再进行上传。
+            reader.onload=(event)=>{
+                imgurl=event.target.result
+                // console.log(typeof imgurl)
+                // 包一个msg把img的base64码传过去
+                // let msg = { 'img': imgurl }
+                // JSON.stringify(msg)
+                // axios.post(this.POST_URL+'/detect',msg).then(res=>{
+                //     console.log(res.data)
+                // })
+                this.$router.push({name:'drawboard',params:{'imgurl':imgurl}})
+            }
+        },
+        // 通过base64和h5的自然宽高属性拿到img的原始宽高
+        getImgNaturalSizeByBase64Code(bcode){
+            var image = new Image()
+            image.src = bcode
+            let naturalSize ={}
+            image.onload=event=>{
+                // console.log(event.target)
+                naturalSize.width = event.target.naturalWidth
+                naturalSize.height = event.target.naturalHeight
+            }
+            return naturalSize
+            // while(JSON.stringify(naturalSize) == '{}'){
 
-        }
+            // }
+        },
+        getImgNaturalSize(img){
+            var naturalSize ={};
+            if(img.naturalWidth && img.naturalHeight){
+                naturalSize.width = img.naturalWidth;
+                    naturalSize.height = img.naturalHeight;
+            }else{
+                let image = new Image();
+                image.src = img.src;
+                naturalSize.width = image.naturalWidth;
+                naturalSize.height = image.naturalHeight;
+            }
+            return naturalSize;
+        }       
     }
 }
 </script>
