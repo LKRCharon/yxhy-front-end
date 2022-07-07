@@ -2,18 +2,15 @@
     <div>
         <div class="app min-h-full flex flex-col fixed w-full h-full overflow-hidden">
             <header
-                class="absolute z-10 flex p-2 w-full bg-white bg-opacity-50 backdrop-blur-xl justify-between items-center sm:items-start">
-                <div @click="
-                            isdrawing = false;
-                            cb.imgsrc = '';
-                            boxs = [];" role="button" tabindex="-1"
+                class="absolute z-10 flex p-2 w-full bg-white bg-opacity-70 shadow-md rounded-md backdrop-blur-3xl justify-between items-center sm:items-start">
+                <!-- 左上角返回按钮 -->
+                <div @click="backHome()" role="button" tabindex="-1"
                     class="inline-flex py-3 rounded-xl cursor-pointer space-x-3 px-5 hover:bg-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         aria-hidden="true" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-
                     <span class="whitespace-nowrap select-none">返回</span>
                 </div>
                 <!-- 顶部右侧按钮div -->
@@ -73,7 +70,6 @@
                 </div>
             </header>
             <!--canvas和背景图  -->
-            <!-- TODO -->
             <div ref="canvaswrapper" class="transform-wrapper h-full w-full relative">
             <!-- 利用scale和translate变换尺寸并放到屏幕中央 -->
                 <div ref="canvascomponent" class="transform-component flex flex-wrap" 
@@ -103,7 +99,7 @@
                 }" style="transform: translate(-50%, -50%)"></div>
             <!-- 绑定box -->
             <div v-for="(box, index) in cboxs" @click="bdboxclicked($event, index)"
-                class="fixed z-20 border-4 border-primary hover-bg-primary-op70" :style="{
+                class="fixed z-20 border-2 border-primary hover:bg-primary hover:opacity-50" :style="{
                     top: box.y + 'px',
                     left: box.x + 'px',
                     width: box.w + 'px',
@@ -154,7 +150,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="has-tooltip">
+                    <!-- 语义分割后自动修复 -->
+                    <!-- <div class="has-tooltip">
                         <div role="button" tabindex="-1" :class="stateDetectButtonBg" @click="autoDetectSubmit()"
                             class="inline-flex py-3 rounded-xl cursor-pointer px-3 sm:px-5">
                             <svg t="1651568862378" class="w-6 h-6" viewBox="0 0 1024 1024" version="1.1"
@@ -174,8 +171,9 @@
                                 </svg>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
+                <!-- 画笔大小调节框 -->
                 <div class="flex justify-center items-center sm:justify-start sm:w-90 pointer-events-auto">
                     <div
                         class="flex sm:items-center space-x-4 max-w-3xl bg-gray-200 bg-opacity-50 backdrop-blur-xl rounded-2xl p-2 justify-evenly">
@@ -185,7 +183,7 @@
                                     <span class="whitespace-nowrap">画笔</span>
                                 </div>
                                 <input class="appearance-none rounded-lg h-4 bg-primary w-24 md:w-auto" type="range"
-                                    step="1" min="10" max="100" v-model="cb.penSize" />
+                                    min="10" max="100" v-model="cb.penSize" />
                             </div>
                         </div>
                         <!-- -------------------------- 提交 ----------------------------->
@@ -239,7 +237,10 @@ export default {
     data() {
         return {
             POST_URL:'https://55r11310h8.oicp.vip',
-            //记录图像原始数据，在画板压缩后的图片需要靠这些来画box
+            // 防止onload反复初始化，可以优化
+            isLoaded:false,
+
+            //记录图像原始数据
             originImg: {
                 w: 0,
                 h: 0,
@@ -349,26 +350,36 @@ export default {
         },
     },
     mounted() {
+        // 查看结果状态有问题 打印调试
+        // console.log("Mounted!")
         this.cb.imgsrc = this.$route.params["imgurl"];
         this.cb.resultSrc=this.cb.imgsrc
         this.$refs.img.onload=(event)=>{
+            // console.log("IMG ONLOAD!")
             this.originImg.w= event.target.naturalWidth
             this.originImg.h= event.target.naturalHeight
             this.isOnload=true
-            this.originImg.showWidth=window.innerWidth-20
-            this.originImg.showHeight=window.innerHeight-150
+            this.originImg.showWidth=window.innerWidth-40
+            this.originImg.showHeight=window.innerHeight-180
             this.originImg.r = Math.max(this.originImg.w/(this.originImg.showWidth),this.originImg.h/(this.originImg.showHeight))
-            this.cb.xoffset=this.originImg.showWidth*this.originImg.r/(2) - this.originImg.w/2
-            this.cb.yoffset=64*this.originImg.r
-            this.initcanvas()
+            this.cb.xoffset=(this.originImg.showWidth+20)*this.originImg.r/(2) - this.originImg.w/2 
+            this.cb.yoffset=88*this.originImg.r
+            if(!this.isLoaded){
+                this.initcanvas()
+            }
+            this.isLoaded=true
         }
     },
     methods: {
+        backHome(){
+            this.$router.push({name:"home"})
+        },
         showResultSwitch() {
             this.cb.isResultShow = !this.cb.isResultShow;
-            this.cb.isBrush = !this.cb.isResultShow;
             this.cb.isDetecting = false;
+            this.cb.isBrush = !this.cb.isResultShow;
             let canvas = this.$refs.mycanvas;
+            console.log(this.cb.isResultShow)
             canvas.height = canvas.height; //清空画板
         },
         initcanvas() {
@@ -378,11 +389,20 @@ export default {
             const canvas = this.$refs.mycanvas; //获取canvas标签
             // const ctx = canvas.getContext("2d");//创建 contextconst canvas = document.getElementById('canvas');  对象
             canvas.height = canvas.height;
-            // console.log(this)
+            console.log(this)
 
             canvas.addEventListener("mousemove", this.drawing); //鼠标移动事件
             canvas.addEventListener("mousedown", this.penDown); //鼠标按下事件
             canvas.addEventListener("mouseup", this.penUp); //鼠标弹起事件
+            canvas.addEventListener("wheel", this.wheel); //鼠标滚轮
+        },
+        wheel(event){
+            // console.log(event.deltaY)
+            if(event.deltaY>0){
+                this.cb.penSize = Math.min(this.cb.penSize+5,100);
+            }else{
+                this.cb.penSize= Math.max(this.cb.penSize-5,10);;
+            }
         },
         penDown(event) {
             this.cb.penClick = true;
@@ -453,7 +473,6 @@ export default {
             this.cb.isBrush = true;
         },
         detectSubmit() {
-            this.cb.isDetecting = true;
             this.cb.isBrush = false;
             alert("已提交检测，请稍等👀");
 
