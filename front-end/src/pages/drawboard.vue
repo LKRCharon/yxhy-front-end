@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <!-- -------------------------- 提交 ----------------------------->
-                        <div @click="submitImage" role="button" tabindex="-1"
+                        <div @click="submitImage()" role="button" tabindex="-1"
                             class="inline-flex py-3 rounded-xl cursor-pointer space-x-3 px-5 bg-primary hover:bg-black hover:text-white">
                             <svg viewBox="0 0 1024 1024" class="w-6 h-6" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
