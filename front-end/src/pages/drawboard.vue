@@ -234,6 +234,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -332,13 +333,14 @@ export default {
                 let cb = [];
                 for (let b of this.boxs) {
                     let bb = {};
-                    bb.x = this.cb.cl + this.originImg.r * b.xmin;
-                    bb.y = this.cb.ct + this.originImg.r * b.ymin;
-                    bb.w = this.originImg.r * (b.xmax - b.xmin);
-                    bb.h = this.originImg.r * (b.ymax - b.ymin);
+                    bb.x = this.cb.cl + b.xmin/this.originImg.r;
+                    bb.y = this.cb.ct + b.ymin/this.originImg.r;
+                    bb.w = (b.xmax - b.xmin)/this.originImg.r;
+                    bb.h = (b.ymax - b.ymin)/this.originImg.r;
                     bb.size = bb.w * bb.h;
                     cb.push(bb);
                 }
+                // 根据div面积重拍，使小的区域后画，方便点击
                 cb.sort(function (a, b) {
                     return b.size - a.size;
                 });
@@ -434,8 +436,8 @@ export default {
         submitImage() {
             const canvas = this.$refs.mycanvas; //获取canvas标签
             this.cb.paintingSrc = canvas.toDataURL("image/png"); //将画板保存为图片格式的函数
-
-            msg = { mask: this.cb.paintingSrc, img: this.cb.imgsrc };
+            // console.log(this.cb.paintingSrc)
+            let msg = { mask: this.cb.paintingSrc, img: this.cb.imgsrc };
             JSON.stringify(msg);
             // console.log(msg)
             alert("🚀已提交！请稍候🏃‍♂️");
@@ -455,9 +457,11 @@ export default {
             this.cb.isBrush = false;
             alert("已提交检测，请稍等👀");
 
-            msg = { img: this.cb.imgsrc };
+            let msg = { img: this.cb.imgsrc };
             JSON.stringify(msg);
+            // console.log(msg)
             const canvas = this.$refs.mycanvas;
+            // console.log(canvas.getBoundingClientRect())
             this.cb.cl = canvas.getBoundingClientRect().x;
             this.cb.ct = canvas.getBoundingClientRect().y;
 
@@ -465,20 +469,22 @@ export default {
                 // console.log(res.data)
                 alert("成啦兄弟");
                 this.boxs = res.data;
+                // console.log(res.data)
+            }).catch(err=>{
+                console.log(err)
             });
         },
         // 保定box点击绘图
         bdboxclicked: function (e, i) {
-            // console.log("dainji")
             const canvas = this.$refs.mycanvas;
             const ctx = canvas.getContext("2d");
-
+            ctx.globalAlpha = 0.5
             ctx.fillStyle = this.cb.penColor;
             ctx.fillRect(
-                this.cboxs[i].x - this.cb.cl,
-                this.cboxs[i].y - this.cb.ct,
-                this.cboxs[i].w,
-                this.cboxs[i].h
+                this.originImg.r*(this.cboxs[i].x - this.cb.cl),
+                this.originImg.r*(this.cboxs[i].y - this.cb.ct),
+                this.originImg.r*this.cboxs[i].w,
+                this.originImg.r*this.cboxs[i].h
             );
         },
         cleancanvas() {

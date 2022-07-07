@@ -1,7 +1,7 @@
 <template>
     <div id="root">
         <div class="app min-h-full flex flex-col ">
-            <headerNav/>    
+            <headerNav />
             <main
                 class="flex flex-1 flex-col sm:items-center sm:justify-center overflow-hidden pt-24 items-center justify-center pb-10">
                 <div class="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-6 p-5 pt-0 pb-10">
@@ -57,50 +57,51 @@
                 </div>
             </main>
         </div>
+        <div class="homepage-block bg-primary">
+            <h1 class="font-serif font-semibold text-4xl">Retouch images in seconds
+                <br>
+                with
+                <span class="highlight text-primary">incredible quality</span>
+            </h1>
+            <p class="pt-5">↑ Drag &amp; drop an image above to get started for free</p>
+        </div>
     </div>
 </template>
 
 <script>
 // import utils from '../utils/imgTool'
-import axios from 'axios';
 import HeaderNav from '../components/headerNav.vue';
 export default {
     components: { HeaderNav },
-    data (){
-        return{
+    data() {
+        return {
             // 内网穿透的域名
-            POST_URL:'https://55r11310h8.oicp.vip'
+            POST_URL: 'https://55r11310h8.oicp.vip'
         }
     },
-    methods:{
-        exampleClicked(event){
-            // console.log(event.target.naturalWidth)
+    methods: {
+        exampleClicked(event) {
+            let imgfile = event.target.src
+            console.log(imgfile)
         },
-        uploadImg(e){
-            let imgfile=e.target.files[0]
+        uploadImg(e) {
+            let imgfile = e.target.files[0]
             let imgurl = null;
             // 初始化fileReader读取imgfile的base64码。
             var reader = new FileReader()
             reader.readAsDataURL(imgfile)
             // onload控制读取完成后再进行上传。
-            reader.onload=(event)=>{
-                imgurl=event.target.result
-                // console.log(typeof imgurl)
-                // 包一个msg把img的base64码传过去
-                // let msg = { 'img': imgurl }
-                // JSON.stringify(msg)
-                // axios.post(this.POST_URL+'/detect',msg).then(res=>{
-                //     console.log(res.data)
-                // })
-                this.$router.push({name:'drawboard',params:{'imgurl':imgurl}})
+            reader.onload = (event) => {
+                imgurl = event.target.result
+                this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl } })
             }
         },
         // 通过base64和h5的自然宽高属性拿到img的原始宽高
-        getImgNaturalSizeByBase64Code(bcode){
+        getImgNaturalSizeByBase64Code(bcode) {
             var image = new Image()
             image.src = bcode
-            let naturalSize ={}
-            image.onload=event=>{
+            let naturalSize = {}
+            image.onload = event => {
                 // console.log(event.target)
                 naturalSize.width = event.target.naturalWidth
                 naturalSize.height = event.target.naturalHeight
@@ -110,22 +111,48 @@ export default {
 
             // }
         },
-        getImgNaturalSize(img){
-            var naturalSize ={};
-            if(img.naturalWidth && img.naturalHeight){
+        getImgNaturalSize(img) {
+            var naturalSize = {};
+            if (img.naturalWidth && img.naturalHeight) {
                 naturalSize.width = img.naturalWidth;
-                    naturalSize.height = img.naturalHeight;
-            }else{
+                naturalSize.height = img.naturalHeight;
+            } else {
                 let image = new Image();
                 image.src = img.src;
                 naturalSize.width = image.naturalWidth;
                 naturalSize.height = image.naturalHeight;
             }
             return naturalSize;
-        }       
+        }
     }
 }
 </script>
 
 <style lang="css" scoped>
+.homepage-block {
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem .5rem;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.highlight {
+    white-space: nowrap;
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    border-top-right-radius: 9999px;
+    border-bottom-right-radius: 9999px;
+    --tw-bg-opacity: 1;
+    background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+    padding: .25rem 1rem;
+    line-height: 3rem;
+}
+.font-alt {
+    font-family: "VarentGrotesk",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+}
 </style>
