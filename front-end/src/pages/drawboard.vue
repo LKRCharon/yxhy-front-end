@@ -53,7 +53,7 @@
                             </button>
                         </div>
                     </div>
-                    <!--齿轮  -->
+                    <!--下载  -->
                     <div class="ml-3 relative">
                         <div>
                             <button aria-label="Menu" @click="downImage"
@@ -246,7 +246,8 @@ export default {
                 h: 0,
                 r: 1, //宽高缩放了多少
                 showWidth:0,
-                showHeight:0
+                showHeight:0,
+                name:''
             },
             isOnload:false,
             cb: {
@@ -350,9 +351,9 @@ export default {
         },
     },
     mounted() {
-        // 查看结果状态有问题 打印调试
-        // console.log("Mounted!")
-        this.cb.imgsrc = this.$route.params["imgurl"];
+        // 从路由传的参数拿imgsrc和name
+        this.cb.imgsrc = this.$route.params["imgurl"]
+        this.originImg.name=this.$route.params['imgname']
         this.cb.resultSrc=this.cb.imgsrc
         this.$refs.img.onload=(event)=>{
             // console.log("IMG ONLOAD!")
@@ -379,7 +380,7 @@ export default {
             this.cb.isDetecting = false;
             this.cb.isBrush = !this.cb.isResultShow;
             let canvas = this.$refs.mycanvas;
-            console.log(this.cb.isResultShow)
+            // console.log(this.cb.isResultShow)
             canvas.height = canvas.height; //清空画板
         },
         initcanvas() {
@@ -389,13 +390,14 @@ export default {
             const canvas = this.$refs.mycanvas; //获取canvas标签
             // const ctx = canvas.getContext("2d");//创建 contextconst canvas = document.getElementById('canvas');  对象
             canvas.height = canvas.height;
-            console.log(this)
+            // console.log(this)
 
             canvas.addEventListener("mousemove", this.drawing); //鼠标移动事件
             canvas.addEventListener("mousedown", this.penDown); //鼠标按下事件
             canvas.addEventListener("mouseup", this.penUp); //鼠标弹起事件
             canvas.addEventListener("wheel", this.wheel); //鼠标滚轮
         },
+        // 滚轮调节画笔大小
         wheel(event){
             // console.log(event.deltaY)
             if(event.deltaY>0){
@@ -524,7 +526,8 @@ export default {
             let url = this.cb.resultSrc; // 获取图片地址
             var a = document.createElement("a"); // 创建一个a节点插入的document
             var event = new MouseEvent("click"); // 模拟鼠标click点击事件
-            a.download = "result.png"; // 设置a节点的download属性值
+            // console.log(this.originImg.name)
+            a.download = this.originImg.name; // 设置a节点的download属性值
             a.href = url; // 将图片的src赋值给a节点的href
             a.dispatchEvent(event); // 触发鼠标点击事件
         },

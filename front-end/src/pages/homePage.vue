@@ -22,7 +22,10 @@
                             <track kind="captions">
                         </video></div>
                 </div>
-                <div class="h-20 sm:h-52 px-4 w-full my-8 sm:my-0" style="max-width: 800px;">
+                <!-- 拖拽上传文件 -->
+                <div ref="dropdiv" class="h-20 sm:h-52 px-4 w-full my-8 sm:my-0" style="max-width: 800px;"
+                    @drop.prevent="filedrop" @dragover.prevent
+                >
                     <label for="upload_img"
                         class="flex items-center w-full h-full group relative cursor-pointer rounded-md font-medium focus-within:outline-none">
                         <div
@@ -79,7 +82,28 @@ export default {
             POST_URL: 'https://55r11310h8.oicp.vip'
         }
     },
+    mounted(){
+        // console.log(this.$refs.dropdiv)
+    },
     methods: {
+        filedrop(event){
+            // console.log(event)
+            if (event.type === 'drop') {
+                //获取文件信息，同File对象相同
+                var files = event.dataTransfer.files;
+                let imgurl = null;
+                console.log(
+                    `文件名称:${files[0].name},文件类型:${files[0].type},文件大小:${files[0].size} bytes`
+                )
+                var reader = new FileReader()
+                reader.readAsDataURL(files[0])
+                console.log("filereading")
+                reader.onload = (event) => {
+                    imgurl = event.target.result
+                    this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl ,'imgname':files[0].name} })
+                }
+            }
+        },
         exampleClicked(event) {
             let imgfile = event.target.src
             console.log(imgfile)
@@ -93,7 +117,7 @@ export default {
             // onload控制读取完成后再进行上传。
             reader.onload = (event) => {
                 imgurl = event.target.result
-                this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl } })
+                this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl,'imgname':imgfile.name} })
             }
         },
         // 通过base64和h5的自然宽高属性拿到img的原始宽高
