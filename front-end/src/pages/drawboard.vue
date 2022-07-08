@@ -457,7 +457,7 @@ export default {
             const canvas = this.$refs.mycanvas; //获取canvas标签
             this.cb.paintingSrc = canvas.toDataURL("image/png"); //将画板保存为图片格式的函数
             // console.log(this.cb.paintingSrc)
-            let msg = { mask: this.cb.paintingSrc, img: this.cb.imgsrc };
+            let msg = { mask: this.cb.paintingSrc, img: this.cb.imgsrc,prop:this.originImg.r};
             JSON.stringify(msg);
             // console.log(msg)
             alert("🚀已提交！请稍候🏃‍♂️");

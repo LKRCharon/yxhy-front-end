@@ -10,9 +10,9 @@ export default{
             class="w-full bg-white bg-opacity-70 filter backdrop-blur-3xl z-10 flex px-5 pt-3 pb-3 justify-between items-center sm:items-start">
             <div><a href="/#" aria-label="Cleanup Logo">
                     <img src="../assets/logo.png" alt="logo"
-                        class="hidden sm:inline-block hover:underline my-2.5" width="30" height="28">
+                        class="inline-block hover:underline my-2.5" width="30" height="28">
                 </a>
-                <a class="hidden sm:inline-block hover:underline">移形绘影</a>
+                <a class="inline-block hover:underline">移形绘影</a>
             </div>
             <div class="flex items-center space-x-8">
                 <a class="hidden sm:inline-block hover:underline" @click="$router.push({ name: 'drawboard' })">画板</a>
