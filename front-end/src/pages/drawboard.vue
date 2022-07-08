@@ -75,7 +75,8 @@
                 <div ref="canvascomponent" class="transform-component flex flex-wrap" 
                 :style="{transform:'scale('+1/originImg.r+') translate('+cb.xoffset+'px,'+ cb.yoffset+'px' +')'}"
                 style="transform-origin: 0px 0px">
-                    <canvas ref="mycanvas" @mouseenter="cb.isOnCanvas = true" @mouseleave="cb.isOnCanvas = false"
+                    <canvas ref="mycanvas" 
+                    @wheel.prevent="wheel" @mouseenter="cb.isOnCanvas = true" @mouseleave="cb.isOnCanvas = false"
                         class="rounded-sm z-10" :style="{ cursor: cursorStyle }" 
                         :width="originImg.w" :height="originImg.h">
                         </canvas>
@@ -369,7 +370,7 @@ export default {
             canvas.addEventListener("mousemove", this.drawing); //鼠标移动事件
             canvas.addEventListener("mousedown", this.penDown); //鼠标按下事件
             canvas.addEventListener("mouseup", this.penUp); //鼠标弹起事件
-            canvas.addEventListener("wheel", this.wheel); //鼠标滚轮
+            // canvas.addEventListener("wheel", this.wheel); //鼠标滚轮
         },
         // 滚轮调节画笔大小
         wheel(event){

@@ -1,7 +1,27 @@
 <template>
     <div id="root">
         <div class="app min-h-full flex flex-col ">
-            <headerNav />
+            <!-- <headerNav /> -->
+            <!-- 顶部nav -->
+            <div class="fixed w-full z-10">
+                <div
+                    class="w-full bg-white bg-opacity-70 filter backdrop-blur-3xl z-10 flex px-5 pt-3 pb-3 justify-between items-center ">
+                    <!-- 左侧logo -->
+                    <div>
+                        <a href="#" aria-label="huiInpainting Logo">
+                            <img src="../assets/fontlogo.png" alt="logo" class="inline-block "
+                                width="144" height="48">
+                        </a>
+                    </div>
+                    <!-- 右边导航 -->
+                    <div class="flex items-center justify-center space-x-8">
+                    <a class="hidden hover:bg-primary p-2 px-2 rounded-lg sm:inline-block" href="#advantage">产品优势</a>
+                    <a class="hidden hover:bg-primary p-2 px-2 rounded-lg sm:inline-block" href="#lesson">使用教程</a>
+                    <a class="hidden hover:bg-primary p-2 px-2 rounded-lg sm:inline-block" href="#contactus">联系我们</a>
+                        
+                    </div>
+                </div>
+            </div>
             <main
                 class="flex flex-1 flex-col sm:items-center sm:justify-center overflow-hidden pt-24 items-center justify-center pb-10">
                 <div class="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-6 p-5 pt-0 pb-10">
@@ -15,17 +35,13 @@
                             <p class="underline font-varent">转瞬之间，移形绘影</p>
                         </h1>
                     </div>
-                    <div class="w-60 sm:w-80 flex items-center rounded-xl overflow-hidden"><video
-                            class="w-60 h-48 sm:w-80 sm:h-64 bg-gray-100 rounded-xl overflow-hidden" style="">
-                            <source src="https://storage.googleapis.com/cleanup-pictures.appspot.com/demo_small.mp4"
-                                type="video/mp4">
-                            <track kind="captions">
-                        </video></div>
+                    <div class="w-60 sm:w-80 flex items-center rounded-xl overflow-hidden">
+                        <img src="../assets/intro.gif" alt="introduction">
+                    </div>
                 </div>
                 <!-- 拖拽上传文件 -->
                 <div ref="dropdiv" class="h-20 sm:h-52 px-4 w-full my-8 sm:my-0" style="max-width: 800px;"
-                    @drop.prevent="filedrop" @dragover.prevent
-                >
+                    @drop.prevent="filedrop" @dragover.prevent>
                     <label for="upload_img"
                         class="flex items-center w-full h-full group relative cursor-pointer rounded-md font-medium focus-within:outline-none">
                         <div
@@ -33,7 +49,7 @@
                             <input id="upload_img" name="upload_img" type="file" class="sr-only"
                                 accept="image/png, image/jpeg, image/jpg" @change="uploadImg($event)">
                             <p class="hidden sm:block">单击或拖拽文件到此处</p>
-                            <p class="sm:hidden">点击这里加载你的图片</p>
+                            <p class="sm:hidden">点击这里加载图片</p>
                         </div>
                     </label>
                 </div>
@@ -60,23 +76,24 @@
                 </div>
             </main>
         </div>
-         <div class="homepage-block bg-primary">
-            <h1 class="font-serif font-semibold text-4xl">让你的图片焕发新的生机！
+        <div class="homepage-block bg-primary">
+            <h1 class="font-serif font-semibold text-4xl">让图片焕发新的生机！
                 <br>
 
                 <span class="highlight text-primary">在刹那瞬间</span>
             </h1>
             <p class="pt-5">↓ 看看我们的产品介绍和使用方法吧！(╹ڡ╹ )</p>
+            <div id="advantage"></div>
         </div>
-       
-        <div class="bg-white">
-            <div
-                class="max-w-2xl mx-auto py-24 px-4 grid items-center grid-cols-1 gap-y-16 gap-x-8 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8 lg:grid-cols-2">
+
+        <div class="">
+            <div 
+                class="max-w-2xl sm:mx-auto lg:ml-auto py-8 px-4 grid items-center grid-cols-1 gap-y-16 gap-x-8 sm:px-6 sm:py-16 sm:text-center">
                 <div>
                     <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">产品优势</h2>
-                    <p class="mt-4 text-gray-500">移形绘影</p>
+                    <!-- <p class="mt-4 text-gray-500">移形绘影</p> -->
 
-                    <dl class="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
+                    <dl class=" m-auto mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 sm:gap-y-8 lg:gap-x-8">
                         <div class="border-t border-gray-200 pt-4">
                             <dt class="font-medium text-gray-900">快捷</dt>
                             <dd class="mt-2 text-sm text-gray-500">打开网页，一键使用</dd>
@@ -108,8 +125,8 @@
                         </div>
                     </dl>
                 </div>
-                <div class="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-                    <img src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-01.jpg"
+                <!-- <div class="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8"> -->
+                <!-- <img src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-01.jpg"
                         alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
                         class="bg-gray-100 rounded-lg">
                     <img src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-02.jpg"
@@ -121,10 +138,10 @@
                     <img src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-04.jpg"
                         alt="Walnut card tray filled with cards and card angled in dedicated groove."
                         class="bg-gray-100 rounded-lg">
-                </div>
+                </div> -->
             </div>
         </div>
-        <div class="py-12 bg-white">
+        <div class="py-12 bg-white" id="lesson">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="lg:text-center">
                     <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">我该如何使用？（￣▽￣）</h2>
@@ -133,11 +150,11 @@
                 </div>
 
                 <div class="mt-10">
-                    <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                    <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8  md:gap-y-10">
                         <div class="relative">
                             <dt>
                                 <div
-                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                                     <!-- Heroicon name: outline/globe-alt -->
                                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -155,7 +172,7 @@
                         <div class="relative">
                             <dt>
                                 <div
-                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                                     <!-- Heroicon name: outline/scale -->
                                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -172,7 +189,7 @@
                         <div class="relative">
                             <dt>
                                 <div
-                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                                     <!-- Heroicon name: outline/lightning-bolt -->
                                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -182,13 +199,14 @@
                                 </div>
                                 <p class="ml-16 text-lg leading-6 font-medium text-gray-900">画笔模式</p>
                             </dt>
-                            <dd class="mt-2 ml-16 text-base text-gray-500">你可以利用画笔自由选择想要抹去的部分，可以在选项框内控制画笔粗细。如果画的不满意，可以在右上角一键擦去痕迹重新来哦！画好后点击提交即可！</dd>
+                            <dd class="mt-2 ml-16 text-base text-gray-500">
+                                你可以利用画笔自由选择想要抹去的部分，可以在选项框内控制画笔粗细。如果画的不满意，可以在右上角一键擦去痕迹重新来哦！画好后点击提交即可！</dd>
                         </div>
 
                         <div class="relative">
                             <dt>
                                 <div
-                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                                     <!-- Heroicon name: outline/annotation -->
                                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -198,13 +216,24 @@
                                 </div>
                                 <p class="ml-16 text-lg leading-6 font-medium text-gray-900">物体检测模式</p>
                             </dt>
-                            <dd class="mt-2 ml-16 text-base text-gray-500">选择物体检测模式之后，自动开始检测！检测好返回后选择想要去除的框框，点击提交！在右上角可以开关进行前后效果对比！成功之后可以点击下载获取新图片！</dd>
+                            <dd class="mt-2 ml-16 text-base text-gray-500">
+                                选择物体检测模式之后，自动开始检测！检测好返回后选择想要去除的框框，点击提交！在右上角可以开关进行前后效果对比！成功之后可以点击下载获取新图片！</dd>
                         </div>
                     </dl>
                 </div>
             </div>
+            <div id="contactus"></div>
         </div>
-        
+        <footer class="mx-auto mt-12 w-full max-w-container px-4 sm:px-6 lg:px-8">
+            <div class="border-t border-slate-900/5 py-10">
+                <p class="mt-5 text-center text-sm leading-6 text-slate-500">© 2022 Hide( ) Inc. All rights
+                    reserved.</p>
+                <div
+                    class="mt-4 flex items-center justify-center space-x-4 text-sm font-semibold leading-6 text-slate-700">
+                    <a href="mailto:leecharongg@gmail.com">欢迎联系我们</a>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 
@@ -219,11 +248,11 @@ export default {
             POST_URL: 'https://55r11310h8.oicp.vip'
         }
     },
-    mounted(){
+    mounted() {
         // console.log(this.$refs.dropdiv)
     },
     methods: {
-        filedrop(event){
+        filedrop(event) {
             // console.log(event)
             if (event.type === 'drop') {
                 //获取文件信息，同File对象相同
@@ -234,16 +263,25 @@ export default {
                 )
                 var reader = new FileReader()
                 reader.readAsDataURL(files[0])
-                console.log("filereading")
+                // console.log("filereading")
                 reader.onload = (event) => {
                     imgurl = event.target.result
-                    this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl ,'imgname':files[0].name} })
+                    this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl, 'imgname': files[0].name } })
                 }
             }
         },
         exampleClicked(event) {
-            let imgfile = event.target.src
-            console.log(imgfile)
+            let img = event.target
+
+            let tempCanvas = document.createElement("canvas");
+            tempCanvas.width = img.naturalWidth;
+            tempCanvas.height = img.naturalHeight;
+            console.log(tempCanvas)
+            let ctx = tempCanvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            let imgsrc = tempCanvas.toDataURL("image/png");
+            console.log(imgsrc)
+            this.$router.push({ name: 'drawboard', params: { 'imgurl': imgsrc, 'imgname': 'example.png' } })
         },
         uploadImg(e) {
             let imgfile = e.target.files[0]
@@ -254,7 +292,7 @@ export default {
             // onload控制读取完成后再进行上传。
             reader.onload = (event) => {
                 imgurl = event.target.result
-                this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl,'imgname':imgfile.name} })
+                this.$router.push({ name: 'drawboard', params: { 'imgurl': imgurl, 'imgname': imgfile.name } })
             }
         },
         // 通过base64和h5的自然宽高属性拿到img的原始宽高
@@ -312,8 +350,9 @@ export default {
     padding: .25rem 1rem;
     line-height: 3rem;
 }
+
 .font-alt {
-    font-family: "VarentGrotesk",Helvetica,Arial,sans-serif;
+    font-family: "VarentGrotesk", Helvetica, Arial, sans-serif;
     font-weight: 600;
 }
 </style>
