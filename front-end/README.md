@@ -15,6 +15,14 @@ git pull --rebase git@github.com:lkrcharon/yxhy-front-end.git gh-pages
 git push -f git@github.com:lkrcharon/yxhy-front-end.git gh-pages
 cd ..
 
+cd dist
+git init
+git remote add origin git@github.com:lkrcharon/yxhy-front-end.git  
+git add -A -f
+git commit -m 'deploy'
+git pull --rebase orgin gh-pages
+git push -f orgin gh-pages
+cd ..
 
 git checkout gh-pages
 git checkout develop -- dist
