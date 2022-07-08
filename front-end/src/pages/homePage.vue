@@ -258,9 +258,9 @@ export default {
                 //获取文件信息，同File对象相同
                 var files = event.dataTransfer.files;
                 let imgurl = null;
-                console.log(
-                    `文件名称:${files[0].name},文件类型:${files[0].type},文件大小:${files[0].size} bytes`
-                )
+                // console.log(
+                //     `文件名称:${files[0].name},文件类型:${files[0].type},文件大小:${files[0].size} bytes`
+                // )
                 var reader = new FileReader()
                 reader.readAsDataURL(files[0])
                 // console.log("filereading")
@@ -276,11 +276,11 @@ export default {
             let tempCanvas = document.createElement("canvas");
             tempCanvas.width = img.naturalWidth;
             tempCanvas.height = img.naturalHeight;
-            console.log(tempCanvas)
+            // console.log(tempCanvas)
             let ctx = tempCanvas.getContext("2d");
             ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
             let imgsrc = tempCanvas.toDataURL("image/png");
-            console.log(imgsrc)
+            // console.log(imgsrc)
             this.$router.push({ name: 'drawboard', params: { 'imgurl': imgsrc, 'imgname': 'example.png' } })
         },
         uploadImg(e) {

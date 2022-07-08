@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="app min-h-full flex flex-col fixed w-full h-full overflow-hidden">
+        <div class="app min-h-full flex flex-col fixed w-full h-full overflow-hidden"
+        @mouseup="cb.penClick=false">
             <header
                 class="absolute z-10 flex p-2 w-full bg-white bg-opacity-70 shadow-md rounded-md backdrop-blur-3xl justify-between items-center sm:items-start">
                 <!-- 左上角返回按钮 -->
@@ -77,6 +78,8 @@
                 style="transform-origin: 0px 0px">
                     <canvas ref="mycanvas" 
                     @wheel.prevent="wheel" @mouseenter="cb.isOnCanvas = true" @mouseleave="cb.isOnCanvas = false"
+                    @mousedown="penDown" @mousemove="drawing"
+                    @touchmove.prevent="drawing" @touchstart="penDown" @touchend="penUp"
                         class="rounded-sm z-10" :style="{ cursor: cursorStyle }" 
                         :width="originImg.w" :height="originImg.h">
                         </canvas>
@@ -214,7 +217,8 @@ export default {
             POST_URL:'https://55r11310h8.oicp.vip',
             // 防止onload反复初始化，可以优化
             isLoaded:false,
-
+            // 判断是否移动段
+            isPhone:false,
             //记录图像原始数据
             originImg: {
                 w: 0,
@@ -347,6 +351,10 @@ export default {
         }
     },
     methods: {
+        // 调试事件用，输出event
+        elog(e){
+            console.log(e)
+        },
         backHome(){
             this.$router.push({name:"home"})
         },
@@ -367,10 +375,10 @@ export default {
             canvas.height = canvas.height;
             // console.log(this)
 
-            canvas.addEventListener("mousemove", this.drawing); //鼠标移动事件
-            canvas.addEventListener("mousedown", this.penDown); //鼠标按下事件
-            canvas.addEventListener("mouseup", this.penUp); //鼠标弹起事件
-            // canvas.addEventListener("wheel", this.wheel); //鼠标滚轮
+            // canvas.addEventListener("mousemove", this.drawing); //鼠标移动事件
+            // canvas.addEventListener("mousedown", this.penDown); //鼠标按下事件
+            // canvas.addEventListener("mouseup", this.penUp); //鼠标弹起事件
+
         },
         // 滚轮调节画笔大小
         wheel(event){
@@ -382,15 +390,20 @@ export default {
             }
         },
         penDown(event) {
+            // console.log(event)
             this.cb.penClick = true;
             this.cb.startAxisX = event.pageX;
             this.cb.startAxisY = event.pageY;
         },
-        penUp() {
+        penUp(e) {
+            // console.log(e)
             this.cb.penClick = false;
         },
         drawing(event) {
             // console.log(event)
+            if(event.type=="touchmove"){
+                event=event.changedTouches[0]
+            }
             const canvas = this.$refs.mycanvas;
             // this.cb.isBrush=true;
             // console.log(1)
@@ -440,7 +453,7 @@ export default {
             alert("🚀已提交！请稍候🏃‍♂️");
             axios.post(this.POST_URL+"/up_file", msg).then((res) => {
                 // 请求成功，在此处将showSrc改为返回的src
-                alert("成功😎");
+                alert("成功，点击右上角切换到结果图片");
                 // console.log(res.data)
                 this.cb.resultSrc = res.data.resultSrc;
             });
@@ -451,7 +464,6 @@ export default {
         },
         detectSubmit() {
             this.cb.isBrush = false;
-            alert("已提交检测，请稍等👀");
 
             let msg = { img: this.cb.imgsrc };
             JSON.stringify(msg);
@@ -461,10 +473,15 @@ export default {
             this.cb.cl = canvas.getBoundingClientRect().x;
             this.cb.ct = canvas.getBoundingClientRect().y;
 
+            alert("提交检测，请稍等👀");
             axios.post(this.POST_URL+"/detect", msg).then((res) => {
                 // console.log(res.data)
-                alert("成啦兄弟");
                 this.boxs = res.data;
+                if(res.data.length==0){
+                    alert("未检测到物体")
+                }else{
+                    alert("检测到物体，点击检测框可选中");
+                }
                 // console.log(res.data)
             }).catch(err=>{
                 console.log(err)
