@@ -200,32 +200,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div
-                    class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 bg-white bg-opacity-50 backdrop-blur-xl rounded-2xl p-2 sm:py-2 pointer-events-auto">
-                    <!-- 下载icon -->
-                    <div class="has-tooltip ml-2">
-                        <div @click="downImage" role="button" tabindex="-1"
-                            class="inline-flex py-3 rounded-xl cursor-pointer px-3 sm:px-5 hover:bg-primary">
-                            <svg viewBox="0 0 1024 1024" class="w-6 h-6" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M483.2 822.4v-256c0-12.8 12.8-25.6 25.6-25.6s25.6 12.8 25.6 25.6v256l51.2-38.4c12.8-6.4 25.6-6.4 38.4 6.4 12.8 19.2 6.4 32-6.4 38.4l-96 70.4c0 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4l-96-70.4c-12.8-6.4-12.8-25.6-6.4-38.4 6.4-12.8 25.6-12.8 38.4-6.4l51.2 38.4zM278.4 784h-19.2C144 784 54.4 681.6 54.4 560c0-128 96-230.4 211.2-224C304 208 412.8 118.4 534.4 118.4 668.8 118.4 784 220.8 816 368c89.6 19.2 153.6 102.4 153.6 204.8C969.6 688 886.4 784 784 784c-32 0-96 0-166.4-57.6-12.8-12.8-12.8-32 0-38.4 12.8-12.8 25.6-12.8 38.4 0 51.2 51.2 96 44.8 121.6 44.8h6.4c76.8 0 134.4-70.4 134.4-160 0-83.2-57.6-153.6-128-160-12.8 0-19.2-12.8-25.6-19.2-19.2-128-115.2-224-230.4-224-102.4 0-198.4 83.2-224 198.4 0 12.8-12.8 19.2-32 19.2h-25.6c-83.2 0-147.2 76.8-147.2 172.8 0 96 64 172.8 147.2 172.8h12.8c25.6 0 57.6 0 102.4-44.8 12.8-12.8 25.6-12.8 38.4 0 12.8 12.8 12.8 25.6 0 38.4-51.2 51.2-96 57.6-128 57.6z">
-                                </path>
-                            </svg><span class="whitespace-nowrap select-none"></span>
-                        </div>
-                        <div class="tooltip pointer-events-none relative mx-2 hidden sm:block">
-                            <div
-                                class="text-black bg-gray-100 dark:bg-gray-800 dark:text-gray-300 text-xs font-medium rounded-xl py-3 px-5 right-0 top-full whitespace-nowrap">
-                                下载<svg class="absolute text-gray-100 dark:text-gray-800 h-2 w-full left-0 bottom-0"
-                                    x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"
-                                    style="transform: translateY(8px)">
-                                    <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
